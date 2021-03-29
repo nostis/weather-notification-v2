@@ -35,6 +35,12 @@ class User implements UserInterface
      */
     private $password;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Language::class, inversedBy="users")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $language;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -114,5 +120,17 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getLanguage(): ?Language
+    {
+        return $this->language;
+    }
+
+    public function setLanguage(?Language $language): self
+    {
+        $this->language = $language;
+
+        return $this;
     }
 }
