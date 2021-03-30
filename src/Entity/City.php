@@ -49,9 +49,15 @@ class City
      */
     private $users;
 
+    /**
+     * @ORM\OneToMany(targetEntity=NotificationWish::class, mappedBy="city")
+     */
+    private $notificationWishes;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
+        $this->notificationWishes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -143,6 +149,36 @@ class City
             // set the owning side to null (unless already changed)
             if ($user->getCity() === $this) {
                 $user->setCity(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|NotificationWish[]
+     */
+    public function getNotificationWishes(): Collection
+    {
+        return $this->notificationWishes;
+    }
+
+    public function addNotificationWish(NotificationWish $notificationWish): self
+    {
+        if (!$this->notificationWishes->contains($notificationWish)) {
+            $this->notificationWishes[] = $notificationWish;
+            $notificationWish->setCity($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNotificationWish(NotificationWish $notificationWish): self
+    {
+        if ($this->notificationWishes->removeElement($notificationWish)) {
+            // set the owning side to null (unless already changed)
+            if ($notificationWish->getCity() === $this) {
+                $notificationWish->setCity(null);
             }
         }
 

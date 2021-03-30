@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -46,6 +48,16 @@ class User implements UserInterface
      * @ORM\JoinColumn(nullable=false)
      */
     private $city;
+
+    /**
+     * @ORM\OneToMany(targetEntity=NotificationWish::class, mappedBy="user")
+     */
+    private $notificationWishes;
+
+    public function __construct()
+    {
+        $this->notificationWishes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -148,6 +160,36 @@ class User implements UserInterface
     public function setCity(?City $city): self
     {
         $this->city = $city;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|NotificationWish[]
+     */
+    public function getNotificationWishes(): Collection
+    {
+        return $this->notificationWishes;
+    }
+
+    public function addNotificationWish(NotificationWish $notificationWish): self
+    {
+        if (!$this->notificationWishes->contains($notificationWish)) {
+            $this->notificationWishes[] = $notificationWish;
+            $notificationWish->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNotificationWish(NotificationWish $notificationWish): self
+    {
+        if ($this->notificationWishes->removeElement($notificationWish)) {
+            // set the owning side to null (unless already changed)
+            if ($notificationWish->getUser() === $this) {
+                $notificationWish->setUser(null);
+            }
+        }
 
         return $this;
     }
