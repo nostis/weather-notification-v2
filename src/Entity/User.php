@@ -41,6 +41,12 @@ class User implements UserInterface
      */
     private $language;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=City::class, inversedBy="users")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $city;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -130,6 +136,18 @@ class User implements UserInterface
     public function setLanguage(?Language $language): self
     {
         $this->language = $language;
+
+        return $this;
+    }
+
+    public function getCity(): ?City
+    {
+        return $this->city;
+    }
+
+    public function setCity(?City $city): self
+    {
+        $this->city = $city;
 
         return $this;
     }
