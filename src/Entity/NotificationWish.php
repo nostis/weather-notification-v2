@@ -4,12 +4,16 @@ namespace App\Entity;
 
 use App\Repository\NotificationWishRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\Timestampable;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
  * @ORM\Entity(repositoryClass=NotificationWishRepository::class)
  */
 class NotificationWish
 {
+    use TimestampableEntity;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
