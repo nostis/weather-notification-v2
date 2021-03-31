@@ -18,11 +18,6 @@ class NotificationWish
     private $id;
 
     /**
-     * @ORM\Column(type="time")
-     */
-    private $time;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $type;
@@ -38,21 +33,19 @@ class NotificationWish
      */
     private $user;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $firstNotificationDateTime;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $notificationInterval;
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getTime(): ?\DateTimeInterface
-    {
-        return $this->time;
-    }
-
-    public function setTime(\DateTimeInterface $time): self
-    {
-        $this->time = $time;
-
-        return $this;
     }
 
     public function getType(): ?string
@@ -87,6 +80,30 @@ class NotificationWish
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getFirstNotificationDateTime(): ?\DateTimeInterface
+    {
+        return $this->firstNotificationDateTime;
+    }
+
+    public function setFirstNotificationDateTime(\DateTimeInterface $firstNotificationDateTime): self
+    {
+        $this->firstNotificationDateTime = $firstNotificationDateTime;
+
+        return $this;
+    }
+
+    public function getNotificationInterval(): ?int
+    {
+        return $this->notificationInterval;
+    }
+
+    public function setNotificationInterval(int $notificationInterval): self
+    {
+        $this->notificationInterval = $notificationInterval;
 
         return $this;
     }
